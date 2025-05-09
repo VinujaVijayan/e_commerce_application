@@ -11,7 +11,6 @@ class Productcard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = FavouriteProvider.of(context);
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -31,19 +30,18 @@ class Productcard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 15),
+                SizedBox(
+                  height: 15,
+                ),
                 Center(
                   child: Hero(
-                    tag: product.image,
-                    child: Image.asset(
-                      product.image,
-                      width: 130,  // Fixed size to avoid overflow
-                      height: 130, // Fixed size to avoid overflow
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      tag: product.image,
+                      child: Image.asset(product.image,
+                          width: 130, height: 130, fit: BoxFit.cover)),
                 ),
-                SizedBox(height: 15),
+                SizedBox(
+                  height: 15,
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: Text(
@@ -56,7 +54,7 @@ class Productcard extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       '\$${product.price}',
@@ -65,54 +63,45 @@ class Productcard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                  ],
-                ),
-                Expanded(  // Wrap this in an Expanded widget to avoid overflow
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: List.generate(product.colors.length, (index) {
+                    Row(
+                        children: List.generate(product.colors.length, (index) {
                       return Container(
                         width: 18,
                         height: 18,
                         margin: EdgeInsets.only(right: 4),
                         decoration: BoxDecoration(
-                          color: product.colors[index],
-                          shape: BoxShape.circle,
-                        ),
+                            color: product.colors[index],
+                            shape: BoxShape.circle),
                       );
-                    }),
-                  ),
-                ),
+                    }))
+                  ],
+                )
               ],
             ),
           ),
-          // Cartpage-- Favourite
+          // Cartpage-- favourite
           Positioned(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 40, // Reduced height to avoid overflow
-                  decoration: BoxDecoration(
-                    color: Acolor.kprimarycolor,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      provider.toggleFavourite(product);
-                    },
-                    child: Icon(
-                      provider.isExist(product)
-                          ? Icons.favorite
-                          : Icons.favorite_border_outlined,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
+            left: 10,
+            top: 10, // Ensure this stays within the container's bounds
+            child: Container(
+              height: 40, // Reduced height to avoid overflow
+              decoration: BoxDecoration(
+                color: Acolor.kprimarycolor,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  provider.toggleFavourite(product);
+                },
+                child: Icon(
+                  provider.isExist(product)
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ),
